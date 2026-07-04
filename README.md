@@ -53,6 +53,10 @@ Paste a sample of your app's CLI or Streamlit output here so a reader can see wh
 #   09:00 — Feeding (10 min) [priority: high]
 #   ...
 ```
+Plan for Abby (85/90 minutes used):
+  08:00 Breakfast for Buddy (daily, 10 min) [required]
+  08:20 Morning walk for Buddy (daily, 15 min) [required]
+  10:30 Lola's vet appointment for Lola (monthly, 60 min) [required]
 
 ## 🧪 Testing PawPal+
 

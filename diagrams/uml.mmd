@@ -6,34 +6,51 @@ classDiagram
         +int time_available
         +list~string~ preferences
         +list~Pet~ pets
-        +list~Task~ tasks
         +add_pet(pet) None
-        +add_task(task) None
+        +all_tasks() list~Task~
+        +task_owner(task) Pet
     }
 
     class Pet {
         +string name
         +string species
         +string breed
+        +string gender
         +int age
+        +list~Task~ tasks
+        +add_task(task) None
         +describe() string
     }
 
     class Task {
-        +string title
-        +int duration_minutes
+        +string description
+        +int time_minutes
+        +string frequency
+        +string due_time
+        +bool required
         +string priority
+        +bool completed
+        +mark_complete() None
+        +start_minutes() int
+        +end_minutes() int
+        +overlaps(other) bool
+        +importance_level() int
         +priority_score() int
     }
 
     class Scheduler {
+        +Owner owner
         +list~Task~ tasks
         +int time_available
+        +filter_tasks(pending_only, frequency, pet) list~Task~
         +sort_tasks() list~Task~
+        +detect_conflicts() list~tuple~
         +build_plan() list~Task~
+        +explain_conflicts() string
         +explain() string
     }
 
     Owner "1" --> "*" Pet : owns
-    Owner "1" --> "*" Task : adds
-    Scheduler "1" --> "*" Task : schedules
+    Pet "1" --> "*" Task : has
+    Scheduler "1" --> "1" Owner : plans for
+    note for Scheduler "tasks / time_available are derived from owner (single source of truth)"

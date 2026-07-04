@@ -4,15 +4,15 @@
 
 **a. Initial design**
 
-- Briefly describe your initial UML design.
-- What classes did you include, and what responsibilities did you assign to each?
-
-The three main actions the user should be able to do is add their pets with their information, add/edit tasks they want to do, and see their schedule/plan with set time constraints and priority. The first action is a class of adding a pet where it holds the information of the pet like name, age, breed, gender, and a method that adds the pet to a list. The next class would be tasks where it would hold what type of tasks can be added, name of pet, time constraints, priority, and method to add the task to the schedule. The schedule class should display each task of each pet based on their set time constraints and priority. 
+My initial UML design consisted of the owner, pet, task, and scheduler. The owner class contains name, time_availablity, prefeerences, pets, tasks, methods add_pet and add_task. The pet class contains name, specied, breed, gender, age, and method description of pet. The task class contains title, duration_minutes, priority, and method priority_score. The last class is scheduler where it contains tasks, time_available, methods sort_tasks, build_plan, and explain. Relationships between the classes are one owner owns many pets, one owner adds multiple tasks, and one scheduler schedules multiple tasks.
 
 **b. Design changes**
 
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
+
+One of the changes made was adding gender to class pet. Another was adding pet to task, so one task is assinged to one pet. Owner was added to scheduler. The relationship changed was one scheduler plans for one owner. This is so the schedule listens from the owner directly on tasks and time_available. A relationship added for multiple tasks assigned to one pet.
+
 
 ---
 
