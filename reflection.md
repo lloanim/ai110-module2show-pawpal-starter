@@ -7,6 +7,8 @@
 - Briefly describe your initial UML design.
 - What classes did you include, and what responsibilities did you assign to each?
 
+The three main actions the user should be able to do is add their pets with their information, add/edit tasks they want to do, and see their schedule/plan with set time constraints and priority. The first action is a class of adding a pet where it holds the information of the pet like name, age, breed, gender, and a method that adds the pet to a list. The next class would be tasks where it would hold what type of tasks can be added, name of pet, time constraints, priority, and method to add the task to the schedule. The schedule class should display each task of each pet based on their set time constraints and priority. 
+
 **b. Design changes**
 
 - Did your design change during implementation?
