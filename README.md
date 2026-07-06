@@ -48,6 +48,8 @@ Paste a sample of your app's CLI or Streamlit output here so a reader can see wh
 
 ```
 # e.g.:
+# Today's Schedule
+# ------------------
 # Plan for Abby (120/120 minutes used):
 #  6:00 AM Breakfast for Buddy (daily, 10 min) [required]
 #  8:20 AM Morning walk for Buddy (daily, 15 min) [required]
@@ -60,7 +62,8 @@ Paste a sample of your app's CLI or Streamlit output here so a reader can see wh
 
 ## 🧪 Testing PawPal+
 
- Tests for recurrence logic, sorting correctness, and conflict detection
+ Tests for recurrence logic, sorting correctness, and conflict detection.
+
  Confidence Level: 4 stars out of 5
 
 ```bash
@@ -83,23 +86,25 @@ Sample test output:
 
 ## 📐 Smarter Scheduling
 
-> Fill in once you've implemented scheduling logic.
-
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
-| Task sorting | sort_tasks(), sort_by_time() | e.g., by priority, duration |
-| Filtering | filter_tasks() | e.g., by pet, frequency |
-| Conflict handling | detect_conflicts() | e.g., overlapping time slots detection|
-| Recurring tasks | build_plan() | e.g., daily vs. weekly |
+| Task sorting | sort_tasks(), sort_by_time() | By priority *density* (value/minute), or chronologically by start time |
+| Filtering | filter_tasks() | By pet, frequency, pending-only, or due date |
+| Conflict handling | detect_conflicts() | Overlapping time-window detection, even across different pets |
+| Recurring tasks | next_occurrence(), is_due_today() | Daily/weekly auto-regenerate; monthly anchored to day-of-month |
+| Time-budget planning | build_plan() | Greedy fill: required tasks first, then highest-density tasks that fit |
 
 ## 📸 Demo Walkthrough
 
 Describe your app in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. You can input your own name and available time (to do pet tasks) as an owner
+2. You can then add a pet by adding their name, species, breed, gender, and age. A small description of your pet is added below. 
+3. You can add another pet if you like
+4. Tasks can then be added based on the pet you want it to apply, description of task, frequency, duration (minutes), priority, you can check off if its a required task, and add the due time of the task. Multiple can be added for different pets. 
+5. Below the tasks added are displayed which can be filtered by frequency. It displays the number of tasks, total minutes of the tasks, and how many tasks are required. 
+6. The task itself shows what pet it applies to, description, due time, priority, if its required, and a button to check off, if it is done. 
+7. If there is a conflict then a message is displayed below tasks and below generated schedule
+8. You can click on the build schedule button where it takes all the tasks filters it, sorts it, and displays the best schedule for today. It tells you the plan of the owner for their pets. It gives the time, description, its frequency, duration, and if its required.
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->

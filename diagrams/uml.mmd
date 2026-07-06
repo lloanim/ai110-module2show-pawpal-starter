@@ -19,6 +19,7 @@ classDiagram
         +int age
         +list~Task~ tasks
         +add_task(task) None
+        +complete_task(task, today) Task
         +describe() string
     }
 
@@ -30,19 +31,26 @@ classDiagram
         +bool required
         +string priority
         +bool completed
+        +int anchor_day
+        +date due_date
         +mark_complete() None
+        +next_occurrence(today) Task
         +start_minutes() int
         +end_minutes() int
+        +display_time() string
         +overlaps(other) bool
         +importance_level() int
         +priority_score() int
+        +is_due_today(today) bool
     }
 
     class Scheduler {
         +Owner owner
         +list~Task~ tasks
         +int time_available
-        +filter_tasks(pending_only, frequency, pet) list~Task~
+        +complete_task(task, today) Task
+        +filter_tasks(pending_only, frequency, pet, due_on) list~Task~
+        +sort_by_time(tasks) list~Task~
         +sort_tasks() list~Task~
         +detect_conflicts() list~tuple~
         +build_plan() list~Task~
@@ -53,4 +61,6 @@ classDiagram
     Owner "1" --> "*" Pet : owns
     Pet "1" --> "*" Task : has
     Scheduler "1" --> "1" Owner : plans for
+    Scheduler ..> Pet : completes tasks via
+    Task ..> Task : regenerates next occurrence
     note for Scheduler "tasks / time_available are derived from owner (single source of truth)"

@@ -8,11 +8,7 @@ My initial UML design consisted of the owner, pet, task, and scheduler. The owne
 
 **b. Design changes**
 
-- Did your design change during implementation?
-- If yes, describe at least one change and why you made it.
-
 One of the changes made was adding gender to class pet. Another was adding pet to task, so one task is assinged to one pet. Owner was added to scheduler. The relationship changed was one scheduler plans for one owner. This is so the schedule listens from the owner directly on tasks and time_available. A relationship added for multiple tasks assigned to one pet.
-
 
 ---
 
@@ -45,13 +41,11 @@ One moment where I did not accept an AI suggestion was when it suggested to chan
 
 **a. What you tested**
 
-- What behaviors did you test?
-- Why were these tests important?
+I tested to see if mark_complete() works, if adding a task to a pet's task list adds to the counter, if the display format of AM and PM works, if tasks are implemened to an owner, and if tasks are filterd by due date. I also have some tests for recurrence logic, sorting correctness, and conflict detection. These are important for the fundamental functionality of the app where it can generate an ideal schedule with tasks that recurring or more important than others. As well as detect when there would be a scheduling conflict. 
 
 **b. Confidence**
 
-- How confident are you that your scheduler works correctly?
-- What edge cases would you test next if you had more time?
+I am pretty confident that my scheduler works well enough but would like to improve on it more. If I had more time I would test more on the build_plan method for how it prioritizes tasks. 
 
 ---
 
@@ -59,12 +53,12 @@ One moment where I did not accept an AI suggestion was when it suggested to chan
 
 **a. What went well**
 
-- What part of this project are you most satisfied with?
+I am satisfied that the app has functionality in its filtering and sorting that allows for tasks to be used to generate the schedule of the user. 
 
 **b. What you would improve**
 
-- If you had another iteration, what would you improve or redesign?
+I could improve on details like if a task needs be done for two pets at a time like feeding two dogs and/or cats. I would also like to have done an option to delete a task rather than just marking it done or have the ability to change its time. Which could have helped with dealing with conflict issues. 
 
 **c. Key takeaway**
 
-- What is one important thing you learned about designing systems or working with AI on this project?
+One important thing I learned is how much goes into designing a system from scratch. It was difficult for me to actually start because I was usure how this would be implemented. But going step by step from the brainstroming the UML to actally adding logic, helped to see the progress that leads to the UI and how it works. AI helped a lot in my understanding during this project. 
