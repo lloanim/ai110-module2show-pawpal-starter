@@ -54,15 +54,18 @@ Paste a sample of your app's CLI or Streamlit output here so a reader can see wh
 #  10:00 AM Cat Play time! for Lola (weekly, 5 min)
 #  10:00 AM Play time! for Buddy (daily, 30 min)
 #  5:30 PM Lola's vet appointment for Lola (monthly, 60 min) [required]
-#1 scheduling conflict(s) found:
+# 1 scheduling conflict(s) found:
 #  - 10:00 AM "Play time!" (Buddy) overlaps 10:00 AM "Cat Play time!" (Lola)
 ```
 
 ## 🧪 Testing PawPal+
 
+ Tests for recurrence logic, sorting correctness, and conflict detection
+ Confidence Level: 4 stars out of 5
+
 ```bash
 # Run the full test suite:
-pytest
+python -m pytest
 
 # Run with coverage:
 pytest --cov
@@ -71,7 +74,11 @@ pytest --cov
 Sample test output:
 
 ```
-# Paste your pytest output here
+# collected 16 items                                                                                             
+# 
+# tests/test_pawpal.py ................                                                                    [100%]
+# 
+# ============================================== 16 passed in 0.10s ==============================================
 ```
 
 ## 📐 Smarter Scheduling

@@ -1,7 +1,6 @@
 """Simple tests for PawPal+ core behavior."""
 
 from datetime import date
-
 from pawpal_system import Owner, Pet, Scheduler, Task
 
 
@@ -23,7 +22,7 @@ def test_add_task_increases_pet_task_count():
     pet.add_task(task)
     assert len(pet.tasks) == 1  # one task after adding
 
-
+## Tests Recurrence Logic
 def test_next_occurrence_advances_daily_by_one_day():
     """Recurring: completing a daily task's next occurrence is today + 1 day."""
     task = Task(description="Feed", time_minutes=10, frequency="daily")
@@ -32,7 +31,7 @@ def test_next_occurrence_advances_daily_by_one_day():
     assert nxt.due_date == date(2026, 7, 6)
     assert nxt.completed is False
 
-
+## Tests Recurrence Logic
 def test_next_occurrence_chains_from_own_due_date():
     """Recurring: a late-completed task advances from its scheduled due_date."""
     # Scheduled for Jul 5 but completed on Jul 9 -> next is Jul 6, not Jul 10.
@@ -41,7 +40,7 @@ def test_next_occurrence_chains_from_own_due_date():
     assert nxt is not None
     assert nxt.due_date == date(2026, 7, 6)
 
-
+## Tests Recurrence Logic
 def test_next_occurrence_advances_weekly_by_seven_days():
     """Recurring: a weekly task's next occurrence is today + 7 days."""
     task = Task(description="Groom", time_minutes=30, frequency="weekly", anchor_day=0)
@@ -49,13 +48,13 @@ def test_next_occurrence_advances_weekly_by_seven_days():
     assert nxt is not None
     assert nxt.due_date == date(2026, 7, 12)
 
-
+## Tests Recurrence Logic
 def test_next_occurrence_none_for_monthly():
     """Recurring: monthly tasks don't auto-regenerate on completion."""
     task = Task(description="Flea meds", time_minutes=5, frequency="monthly", anchor_day=31)
     assert task.next_occurrence(today=date(2026, 7, 5)) is None
 
-
+## Tests Recurrence Logic
 def test_pet_complete_task_files_next_occurrence():
     """Recurring: completing a daily task through the pet auto-adds the next one."""
     pet = Pet(name="Buddy", species="dog", breed="Lab", gender="male", age=3)
@@ -68,7 +67,7 @@ def test_pet_complete_task_files_next_occurrence():
     assert len(pet.tasks) == 2
     assert nxt.due_date == date(2026, 7, 6)
 
-
+## Tests Recurrence Logic
 def test_scheduler_complete_task_delegates_to_owning_pet():
     """Recurring: Scheduler.complete_task files recurrence via the owning pet."""
     task = Task(description="Feed", time_minutes=10, frequency="daily")
@@ -80,13 +79,13 @@ def test_scheduler_complete_task_delegates_to_owning_pet():
     assert nxt.due_date == date(2026, 7, 6)
     assert nxt in scheduler.owner.pets[0].tasks
 
-
+## Tests Recurrence Logic
 def test_daily_task_is_always_due():
     """Recurring: a daily task fires on any date."""
     task = Task(description="Walk", time_minutes=20, frequency="daily")
     assert task.is_due_today(date(2026, 7, 5)) is True
 
-
+## Tests Recurrence Logic
 def test_weekly_task_fires_only_on_anchor_weekday():
     """Recurring: a weekly task fires only on its anchor weekday."""
     # 2026-07-06 is a Monday (weekday 0); 2026-07-07 is a Tuesday.
@@ -94,14 +93,14 @@ def test_weekly_task_fires_only_on_anchor_weekday():
     assert task.is_due_today(date(2026, 7, 6)) is True
     assert task.is_due_today(date(2026, 7, 7)) is False
 
-
+## Tests Recurrence Logic
 def test_monthly_task_clamps_to_month_end():
     """Recurring: a day-31 monthly task still fires on Feb's last day."""
     task = Task(description="Flea meds", time_minutes=5, frequency="monthly", anchor_day=31)
     assert task.is_due_today(date(2026, 2, 28)) is True  # clamped from 31
     assert task.is_due_today(date(2026, 2, 27)) is False
 
-
+## Tests for display format of AM and PM
 def test_display_time_formats_as_twelve_hour():
     """Display: due_time renders as a 12-hour AM/PM label without changing math."""
     cases = {
@@ -117,7 +116,7 @@ def test_display_time_formats_as_twelve_hour():
         # stored due_time stays 24-hour so scheduling math is untouched
         assert task.due_time == due_time
 
-
+## Tests tasks are implemented to an owner
 def _owner_with_tasks(*tasks: Task) -> Owner:
     owner = Owner(name="Jordan", time_available=240)
     pet = Pet(name="Mochi", species="cat", breed="mixed", gender="female", age=3)
@@ -126,7 +125,7 @@ def _owner_with_tasks(*tasks: Task) -> Owner:
     owner.add_pet(pet)
     return owner
 
-
+## Tests Sorting Correctness
 def test_sort_by_time_orders_chronologically():
     """Sorting: sort_by_time() returns tasks earliest-start first."""
     late = Task(description="Evening walk", time_minutes=20, frequency="daily", due_time="18:00")
@@ -136,7 +135,7 @@ def test_sort_by_time_orders_chronologically():
     ordered = scheduler.sort_by_time()
     assert [t.description for t in ordered] == ["Breakfast", "Evening walk"]
 
-
+## Tests that tasks are filtered by due date
 def test_filter_tasks_by_due_date():
     """Filtering: due_on surfaces only tasks occurring that day."""
     daily = Task(description="Feed", time_minutes=10, frequency="daily")
@@ -147,3 +146,30 @@ def test_filter_tasks_by_due_date():
 
     tuesday = scheduler.filter_tasks(due_on=date(2026, 7, 7))  # a Tuesday
     assert [t.description for t in tuesday] == ["Feed"]
+
+## Tests Conflict Detection
+def test_detect_conflicts_flags_overlapping_times_across_pets():
+    """Conflict Detection: Scheduler flags tasks whose windows overlap, even across pets."""
+    owner = Owner(name="Jordan", time_available=240)
+    dog = Pet(name="Buddy", species="dog", breed="Lab", gender="male", age=3)
+    cat = Pet(name="Mochi", species="cat", breed="mixed", gender="female", age=3)
+    walk = Task(description="Walk", time_minutes=30, frequency="daily", due_time="08:00")
+    feed = Task(description="Feed", time_minutes=15, frequency="daily", due_time="08:00")
+    dog.add_task(walk)
+    cat.add_task(feed)
+    owner.add_pet(dog)
+    owner.add_pet(cat)
+    scheduler = Scheduler(owner=owner)
+
+    conflicts = scheduler.detect_conflicts()
+    assert len(conflicts) == 1
+    assert {t.description for t in conflicts[0]} == {"Walk", "Feed"}
+
+## Tests Conflict Detection
+def test_detect_conflicts_empty_when_times_dont_overlap():
+    """Conflict Detection: non-overlapping tasks produce no conflicts."""
+    morning = Task(description="Walk", time_minutes=30, frequency="daily", due_time="08:00")
+    evening = Task(description="Feed", time_minutes=15, frequency="daily", due_time="18:00")
+    scheduler = Scheduler(owner=_owner_with_tasks(morning, evening))
+
+    assert scheduler.detect_conflicts() == []
