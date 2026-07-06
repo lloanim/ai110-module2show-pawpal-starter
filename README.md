@@ -48,15 +48,15 @@ Paste a sample of your app's CLI or Streamlit output here so a reader can see wh
 
 ```
 # e.g.:
-# Daily plan for Biscuit (Golden Retriever):
-#   08:00 — Morning walk (30 min) [priority: high]
-#   09:00 — Feeding (10 min) [priority: high]
-#   ...
+# Plan for Abby (120/120 minutes used):
+#  6:00 AM Breakfast for Buddy (daily, 10 min) [required]
+#  8:20 AM Morning walk for Buddy (daily, 15 min) [required]
+#  10:00 AM Cat Play time! for Lola (weekly, 5 min)
+#  10:00 AM Play time! for Buddy (daily, 30 min)
+#  5:30 PM Lola's vet appointment for Lola (monthly, 60 min) [required]
+#1 scheduling conflict(s) found:
+#  - 10:00 AM "Play time!" (Buddy) overlaps 10:00 AM "Cat Play time!" (Lola)
 ```
-Plan for Abby (85/90 minutes used):
-  08:00 Breakfast for Buddy (daily, 10 min) [required]
-  08:20 Morning walk for Buddy (daily, 15 min) [required]
-  10:30 Lola's vet appointment for Lola (monthly, 60 min) [required]
 
 ## 🧪 Testing PawPal+
 
@@ -80,10 +80,10 @@ Sample test output:
 
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+| Task sorting | sort_tasks(), sort_by_time() | e.g., by priority, duration |
+| Filtering | filter_tasks() | e.g., by pet, frequency |
+| Conflict handling | detect_conflicts() | e.g., overlapping time slots detection|
+| Recurring tasks | build_plan() | e.g., daily vs. weekly |
 
 ## 📸 Demo Walkthrough
 

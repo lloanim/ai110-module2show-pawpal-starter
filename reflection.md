@@ -20,13 +20,11 @@ One of the changes made was adding gender to class pet. Another was adding pet t
 
 **a. Constraints and priorities**
 
-- What constraints does your scheduler consider (for example: time, priority, preferences)?
-- How did you decide which constraints mattered most?
+My scheduler considers three things of the task: whether it is required (eg. medication, feeding, or vet appointments), its priority (low/medium/high), and its duration. Required tasks are unmissable so its always scheduled even if the owner runs over their available time. Flexible tasks are scheduled based on priority density (priority score/duration), so a short high-value task is scheduled rather than a long task. Clock time (due_time) is used separately to detect and alert of scheduling conflicts between pet's tasks. I decided that required tasks mattered more than flexible tasks because missing the task of giving medication is a major consequence. The flexible tasks can be adjusted for the next day. 
 
 **b. Tradeoffs**
 
-- Describe one tradeoff your scheduler makes.
-- Why is that tradeoff reasonable for this scenario?
+One tradeoff my scheduler makes is that the ranking flexible tasks by priority density can dismiss long, important tasks in favor of several shorter high value ones. This is a reasonable tradeoff because the required tasks are safe in that it is scheduled and the rest of the time window available can be used by the quicker tasks. 
 
 ---
 
@@ -34,13 +32,12 @@ One of the changes made was adding gender to class pet. Another was adding pet t
 
 **a. How you used AI**
 
-- How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
-- What kinds of prompts or questions were most helpful?
+I had made an initial design of the UML and used AI to make suggestion changes that may be needed. At the beginning I was confused as to what exactly I needed to make this app do but as I went along with AI and the project. I got a better understanding of each class and their methods should do. It helped with debugging the issue of how the tasks should be prioritized and go along with what I wanted to be prioritized more. I did use AI to also refactor the build_plan which made a good suggestion of simplifing it from doing three loops to sort tasks and use sort_tasks() where it has one loop to do the same thing. 
+The kind of prompts that where most helpful where the ones where I asked AI to explain the changes it would make. From there I would decide if it fits with what I want to do. 
 
 **b. Judgment and verification**
 
-- Describe one moment where you did not accept an AI suggestion as-is.
-- How did you evaluate or verify what the AI suggested?
+One moment where I did not accept an AI suggestion was when it suggested to change the logic of the frequency of tasks and how that schedules tasks. It would not prioritize important tasks like a vet appointment because it was labled as a monthly task. So I had it reevaluate the logic of how tasks with frequency are scheduled. But as I went along if I did not understand what it was doing I would ask to explain further.
 
 ---
 
